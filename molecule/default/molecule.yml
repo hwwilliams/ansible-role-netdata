@@ -24,14 +24,11 @@ provisioner:
 scenario:
   name: default
   test_sequence:
-    - dependency
     - syntax
     - create
-    - prepare
     - converge
     - idempotence
     - check
-    - side_effect
     - verify
     - destroy
 verifier:
