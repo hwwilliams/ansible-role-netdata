@@ -30,3 +30,5 @@ galaxy_info:
     - netdata
     - metric
     - monitoring
+    - performance
+    - system
