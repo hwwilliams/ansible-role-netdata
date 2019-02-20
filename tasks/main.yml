@@ -2,6 +2,7 @@
 - name: Check If Netdata Is Present
   command: which netdata
   register: which_netdata
+  changed_when: which_netdata.rc == 1
   failed_when: which_netdata.rc > 1
 
 - name: Ensure Netdata Dependencies Are Present (Debian)
@@ -59,6 +60,7 @@
     repo: https://github.com/netdata/netdata.git
     dest: "{{ netdata_root_install_dir }}/netdata"
     version: "{{ netdata_repo_version }}"
+    depth: 100
     force: yes
   notify: Ensure Netdata Is Up To Date
   when: which_netdata.rc != 0
