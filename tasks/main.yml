@@ -1,17 +1,31 @@
 ---
-- name: Ensure Netdata Dependencies Are Present (Debian)
+- name: Ensure Apt Cache Is up to Date (debian)
   become: true
   apt:
+    update_cache: true
+    cache_valid_time: 360
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: Ensure Netdata Dependencies Are Present (General)
+  become: true
+  package:
     name:
       - autoconf
-      - autoconf-archive
-      - autogen
       - automake
       - curl
       - gcc
       - git
-      - libmnl-dev
       - make
+    state: present
+
+- name: Ensure Netdata Dependencies Are Present (Debian)
+  become: true
+  apt:
+    name:
+      - autoconf-archive
+      - autogen
+      - libmnl-dev
       - pkg-config
       - uuid-dev
       - zlib1g-dev
@@ -25,15 +39,9 @@
   become: true
   yum:
     name:
-      - autoconf
-      - automake
-      - curl
-      - gcc
-      - git
       - libmnl-devel
       - libuuid-devel
       - lm_sensors
-      - make
       - MySQL-python
       - nc
       - pkgconfig
