@@ -6,6 +6,8 @@ Installs [Netdata](https://my-netdata.io/) on RedHat/CentOS and Debian/Ubuntu se
 
 This role installs and configures the latest version of Netdata from the offical [Netdata](https://github.com/netdata/netdata) Github repo.
 
+Also on [Ansible Galaxy](https://galaxy.ansible.com/hwwilliams/netdata).
+
 ## Requirements
 
 None.
