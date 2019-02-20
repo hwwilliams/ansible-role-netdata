@@ -1,10 +1,4 @@
 ---
-- name: Check If Netdata Is Present
-  command: which netdata
-  register: which_netdata
-  changed_when: which_netdata.rc == 1
-  failed_when: which_netdata.rc > 1
-
 - name: Ensure Netdata Dependencies Are Present (Debian)
   become: true
   apt:
@@ -26,7 +20,6 @@
     cache_valid_time: 360
   when:
     - ansible_os_family == 'Debian'
-    - which_netdata.rc != 0
 
 - name: Ensure Netdata Dependencies Are Present (RedHat)
   become: true
@@ -52,7 +45,6 @@
     update_cache: true
   when:
     - ansible_os_family == 'RedHat'
-    - which_netdata.rc != 0
 
 - name: Ensure Netdata Github Repo Is Up To Date
   become: true
@@ -63,4 +55,3 @@
     depth: 100
     force: true
   notify: Ensure Netdata Is Installed and up to Date
-  when: which_netdata.rc != 0
