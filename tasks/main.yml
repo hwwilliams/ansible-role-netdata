@@ -62,5 +62,5 @@
     version: "{{ netdata_repo_version }}"
     depth: 100
     force: yes
-  notify: Ensure Netdata Is Up To Date
+  notify: Ensure Netdata Is Installed and up to Date
   when: which_netdata.rc != 0
