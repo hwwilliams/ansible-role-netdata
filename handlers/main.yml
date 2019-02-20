@@ -1,7 +1,7 @@
 ---
 - name: Stop Netdata If Present
   listen: Install Netdata
-  systemd:
+  service:
     name: netdata
     state: stopped
   ignore_errors: true
@@ -15,7 +15,7 @@
 
 - name: Start and Enable Netdata
   listen: Install Netdata
-  systemd:
+  service:
     name: netdata
     state: restarted
     enabled: true
