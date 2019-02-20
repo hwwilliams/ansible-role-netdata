@@ -35,6 +35,21 @@
   when:
     - ansible_os_family == 'Debian'
 
+- name: Ensure Netdata Dependencies Are Present (Fedora)
+  become: true
+  dnf:
+    name:
+      - autoconf-archive
+      - autogen
+      - findutils
+      - libmnl-devel
+      - libuuid-devel
+      - pkgconfig
+      - zlib-devel
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution == 'Fedora'
+
 - name: Ensure Netdata Dependencies Are Present (RedHat)
   become: true
   yum:
@@ -53,6 +68,7 @@
     update_cache: true
   when:
     - ansible_os_family == 'RedHat'
+    - ansible_distribution != 'Fedora'
 
 - name: Ensure Netdata Github Repo Is Up To Date
   become: true
@@ -62,4 +78,4 @@
     version: "{{ netdata_repo_version }}"
     depth: 100
     force: true
-  notify: Ensure Netdata Is Installed and up to Date
+  notify: Install Netdata

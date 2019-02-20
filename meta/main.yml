@@ -16,6 +16,9 @@ galaxy_info:
       versions:
         - jessie
         - stretch
+    - name: Fedora
+      versions:
+        - 27
     - name: Ubuntu
       versions:
         - trusty
@@ -25,5 +28,5 @@ galaxy_info:
     - netdata
     - metric
     - monitoring
-    - system
     - performance
+    - system
