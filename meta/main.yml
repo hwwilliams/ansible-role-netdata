@@ -17,6 +17,9 @@ galaxy_info:
         - wheezy
         - jessie
         - stretch
+    - name: Fedora
+      versions:
+        - 27
     - name: Ubuntu
       versions:
         - precise
