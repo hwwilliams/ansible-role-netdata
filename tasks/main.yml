@@ -1,4 +1,12 @@
 ---
+- name: Ensure Apt Cache Is up to Date (debian)
+  become: true
+  apt:
+    update_cache: true
+    cache_valid_time: 360
+  when:
+    - ansible_os_family == 'Debian'
+
 - name: Ensure Netdata Dependencies Are Present (Debian)
   become: true
   apt:
