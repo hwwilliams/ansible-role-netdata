@@ -1,58 +1,50 @@
 ---
-- name: Check If Netdata Is Present
-  command: which netdata
-  register: which_netdata
-  changed_when: which_netdata.rc == 1
-  failed_when: which_netdata.rc > 1
-
 - name: Ensure Netdata Dependencies Are Present (Debian)
   become: true
   apt:
     name:
-        - autoconf
-        - autoconf-archive
-        - autogen
-        - automake
-        - curl
-        - gcc
-        - git
-        - libmnl-dev
-        - make
-        - pkg-config
-        - uuid-dev
-        - zlib1g-dev
+      - autoconf
+      - autoconf-archive
+      - autogen
+      - automake
+      - curl
+      - gcc
+      - git
+      - libmnl-dev
+      - make
+      - pkg-config
+      - uuid-dev
+      - zlib1g-dev
     state: present
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 360
   when:
     - ansible_os_family == 'Debian'
-    - which_netdata.rc != 0
 
 - name: Ensure Netdata Dependencies Are Present (RedHat)
   become: true
   yum:
     name:
-        - autoconf
-        - automake
-        - curl
-        - gcc
-        - git
-        - libmnl-devel
-        - libuuid-devel
-        - lm_sensors
-        - make
-        - MySQL-python
-        - nc
-        - pkgconfig
-        - python
-        - python-psycopg2
-        - PyYAML
-        - zlib-devel
+      - autoconf
+      - automake
+      - curl
+      - gcc
+      - git
+      - libmnl-devel
+      - libuuid-devel
+      - lm_sensors
+      - make
+      - MySQL-python
+      - nc
+      - pkgconfig
+      - python
+      - python-psycopg2
+      - PyYAML
+      - zlib-devel
     state: present
-    update_cache: yes
+    update_cache: true
   when:
     - ansible_os_family == 'RedHat'
-    - which_netdata.rc != 0
 
 - name: Ensure Netdata Github Repo Is Up To Date
   become: true
@@ -61,6 +53,5 @@
     dest: "{{ netdata_root_install_dir }}/netdata"
     version: "{{ netdata_repo_version }}"
     depth: 100
-    force: yes
+    force: true
   notify: Ensure Netdata Is Installed and up to Date
-  when: which_netdata.rc != 0
