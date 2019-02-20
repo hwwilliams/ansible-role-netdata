@@ -1,4 +1,10 @@
 ---
-netdata_root_install_dir: /opt
 netdata_repo_version: master
 netdata_source_dir: /usr/local/src/netdata
+netdata_install_cmd: "{{ netdata_installer }} --dont-wait --dont-start-it"
+netdata_installer: ./netdata-installer.sh
+netdata_uninstall: false
+netdata_uninstaller:
+    env: /etc/netdata/.environment
+    path: "{{ netdata_source_dir }}/packaging/installer"
+    sh: netdata-uninstaller.sh
