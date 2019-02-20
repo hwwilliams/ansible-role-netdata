@@ -1,0 +1,14 @@
+---
+- name: Ensure Netdata Is Up To Date
+  become: true
+  shell: "./netdata-installer.sh --install {{ netdata_root_install_dir }} --dont-wait"
+  args:
+    chdir: "{{ netdata_root_install_dir }}/netdata"
+
+- name: Restart Netdata Service
+  become: true
+  systemd:
+    name: netdata
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

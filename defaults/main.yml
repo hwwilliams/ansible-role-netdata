@@ -1,0 +1,3 @@
+---
+netdata_root_install_dir: /opt
+netdata_repo_version: master

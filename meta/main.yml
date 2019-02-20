@@ -1,0 +1,21 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: netdata
+  author: hwwilliams
+  description: Netdata installation for Debian and RedHat based Linux systems.
+  license: license (MIT)
+  min_ansible_version: 2.4
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+  galaxy_tags:
+    - netdata
+    - metric
+    - monitoring
