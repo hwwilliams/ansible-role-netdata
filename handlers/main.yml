@@ -1,5 +1,6 @@
 ---
 - name: Stop Netdata If Present
+  become: true
   listen: Install Netdata
   service:
     name: netdata
@@ -9,11 +10,13 @@
 - name: Ensure Netdata Is Installed and up to Date
   listen: Install Netdata
   become: true
-  shell: "./netdata-installer.sh --install {{ netdata_root_install_dir }} --dont-wait --dont-start-it"
+  command: "./netdata-installer.sh --dont-wait --dont-start-it"
   args:
-    chdir: "{{ netdata_root_install_dir }}/netdata"
+    chdir: "{{ netdata_source_dir }}"
+    creates: /usr/sbin/netdata
 
 - name: Start and Enable Netdata
+  become: true
   listen: Install Netdata
   service:
     name: netdata

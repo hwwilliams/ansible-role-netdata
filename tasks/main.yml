@@ -74,7 +74,7 @@
   become: true
   git:
     repo: https://github.com/netdata/netdata.git
-    dest: "{{ netdata_root_install_dir }}/netdata"
+    dest: "{{ netdata_source_dir }}"
     version: "{{ netdata_repo_version }}"
     depth: 100
     force: true
