@@ -1,0 +1,5 @@
+---
+- name: Run Netdata Uninstaller Script
+  command: "./{{ netdata_uninstaller.sh }} -y -f -e {{ netdata_uninstaller.env }}"
+  args:
+    chdir: "{{ netdata_uninstaller.path }}"
