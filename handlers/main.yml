@@ -1,11 +1,17 @@
 ---
-- name: Stop Netdata If Present
+- name: Check for Existing Netdata Service
   become: true
   listen: Install Netdata
+  stat:
+    path: /usr/lib/systemd/system/netdata.service
+  register: netdata_service
+
+- name: Stop Netdata Service If Present
+  become: true
   service:
     name: netdata
     state: stopped
-  ignore_errors: true
+  when: netdata_service.stat.exists == true
 
 - name: Ensure Netdata Is Installed and up to Date
   become: true
