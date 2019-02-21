@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hwwilliams/ansible-role-netdata.svg?branch=master)](https://travis-ci.org/hwwilliams/ansible-role-netdata)
 
-Installs [Netdata](https://my-netdata.io/) on Debian/Ubuntu and CentOS/Redhat based Linux servers.
+Installs [Netdata](https://my-netdata.io/) on Debian/Ubuntu and CentOS/Fedora/Redhat based Linux servers.
 
 This role installs and configures the latest version of Netdata from the offical [Netdata](https://github.com/netdata/netdata) Github repo.
 
