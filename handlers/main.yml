@@ -3,7 +3,7 @@
   become: true
   listen: Install Netdata
   stat:
-    path: /usr/lib/systemd/system/netdata.service
+    path: "{{ netdata_service_path }}"
   register: netdata_service
 
 - name: Stop Netdata Service If Present
