@@ -1,6 +1,7 @@
 ---
 - include_vars:
     file: "{{ ansible_service_mgr }}.yml"
+  when: netdata_uninstall == false
 
 - include_vars:
     file: install-cmd-options.yml
