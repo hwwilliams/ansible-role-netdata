@@ -1,10 +1,78 @@
 ---
+# Version of the Netdata release to pull
+# By default is set as 'master'
+# Release verion number can also be used
+# e.g. 'v1.12.0'
 netdata_repo_version: master
+
+# Directory that the Netdata Github repo
+# will be cloned to
 netdata_source_dir: /usr/local/src/netdata
-netdata_installer: netdata-installer.sh
-netdata_install_cmd: "./{{ netdata_installer }} --dont-wait --dont-start-it"
+
+# Netdata installer script with switches
+# By default both the '--dont-wait' and '--dont-start-it'
+# switches are used
+# '--dont-wait' makes the script run through without
+# waiting for user interaction on prompts
+# '--dont-start-it' makes the script install netdata
+# and its service but doesn't start it once the script finishes
+netdata_install_cmd: ./netdata-installer.sh --dont-wait --dont-start-it
+
+# Netdata installer script optional switches
+######################
+# Syntax example for this variable:
+# netdata_install_options:
+#     - install /opt
+#     - auto-update
+######################
+#
+# Available switches are listed below:
+#    --install /PATH/TO/INSTALL
+#         If you give: --install /opt
+#         netdata will be installed in /opt/netdata
+#    --dont-start-it
+#         Do not (re)start netdata.
+#         Just install it.
+#    --dont-wait
+#         Do not wait for the user to press ENTER.
+#         Start immediately building it.
+#    --auto-update | -u
+#         Install netdata-updater to cron,
+#         to update netdata automatically once per day
+#         (can only be done for installations from git)
+#    --enable-plugin-freeipmi
+#    --disable-plugin-freeipmi
+#         Enable/disable the FreeIPMI plugin.
+#         Default: enable it when libipmimonitoring is available.
+#    --enable-plugin-nfacct
+#    --disable-plugin-nfacct
+#         Enable/disable the nfacct plugin.
+#         Default: enable it when libmnl and libnetfilter_acct are available.
+#    --enable-lto
+#    --disable-lto
+#         Enable/disable Link-Time-Optimization
+#         Default: enabled
+#    --disable-x86-sse
+#         Disable SSE instructions
+#         Default: enabled
+#    --zlib-is-really-here
+#    --libs-are-really-here
+#         If you get errors about missing zlib,
+#         or libuuid but you know it is available,
+#         you have a broken pkg-config.
+#         Use this option to allow it continue
+#         without checking pkg-config.
+#    --disable-telemetry
+#         Use this flag to opt-out from our anonymous telemetry progam.
+#    --disable-go
+#         Flag to disable installation of go.d.plugin
 netdata_install_options: []
+
+# If set to true Netdata will be uninstalled using
+# the official uninstaller script
 netdata_uninstall: false
+
+# Default variables for uninstaller script
 netdata_uninstaller:
     env: /etc/netdata/.environment
     path: "{{ netdata_source_dir }}/packaging/installer"
