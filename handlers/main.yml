@@ -5,6 +5,7 @@
   stat:
     path: "{{ netdata_service_path }}"
   register: netdata_service
+  notify: Stop Netdata Service If Present
 
 - name: Stop Netdata Service If Present
   become: true
