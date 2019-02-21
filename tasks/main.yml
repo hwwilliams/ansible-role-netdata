@@ -1,81 +1,24 @@
 ---
-- name: Ensure Apt Cache Is up to Date (debian)
-  become: true
-  apt:
-    update_cache: true
-    cache_valid_time: 360
+- name: "Include {{ ansible_service_mgr }} Variables"
+  include_vars:
+    file: "{{ ansible_service_mgr }}.yml"
+  when: netdata_uninstall == false
+
+- name: Include Netdata Install Options (If Configured)
+  include_vars:
+    file: install-cmd-options.yml
   when:
-    - ansible_os_family == 'Debian'
+    - netdata_install_options | length > 0
+    - netdata_uninstall == false
 
-- name: Ensure Netdata Dependencies Are Present (General)
-  become: true
-  package:
-    name:
-      - autoconf
-      - automake
-      - curl
-      - gcc
-      - git
-      - make
-    state: present
+- name: Include Main Netdata Install Task
+  include_tasks:
+    file: install.yml
+  when: netdata_uninstall == false
 
-- name: Ensure Netdata Dependencies Are Present (Debian)
-  become: true
-  apt:
-    name:
-      - autoconf-archive
-      - autogen
-      - libmnl-dev
-      - pkg-config
-      - uuid-dev
-      - zlib1g-dev
-    state: present
-    update_cache: true
-    cache_valid_time: 360
-  when:
-    - ansible_os_family == 'Debian'
-
-- name: Ensure Netdata Dependencies Are Present (Fedora)
-  become: true
-  dnf:
-    name:
-      - autoconf-archive
-      - autogen
-      - findutils
-      - libmnl-devel
-      - libuuid-devel
-      - pkgconfig
-      - zlib-devel
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution == 'Fedora'
-
-- name: Ensure Netdata Dependencies Are Present (RedHat)
-  become: true
-  yum:
-    name:
-      - libmnl-devel
-      - libuuid-devel
-      - lm_sensors
-      - MySQL-python
-      - nc
-      - pkgconfig
-      - python
-      - python-psycopg2
-      - PyYAML
-      - zlib-devel
-    state: present
-    update_cache: true
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution != 'Fedora'
-
-- name: Ensure Netdata Github Repo Is Up To Date
-  become: true
-  git:
-    repo: https://github.com/netdata/netdata.git
-    dest: "{{ netdata_root_install_dir }}/netdata"
-    version: "{{ netdata_repo_version }}"
-    depth: 100
-    force: true
-  notify: Install Netdata
+- name: Include Netdata Uninstaller (If Configured)
+  include_tasks:
+    file: uninstall.yml
+  when: netdata_uninstall
+  tags:
+    - netdata_uninstall

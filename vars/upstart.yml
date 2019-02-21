@@ -1,0 +1,4 @@
+---
+# The path to the Netdata service file for systems
+# using Upstart
+netdata_service_path: /etc/rc.d/init.d/netdata

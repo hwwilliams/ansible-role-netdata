@@ -1,0 +1,4 @@
+---
+# The path to the Netdata service file for systems
+# using Systemd
+netdata_service_path: /usr/lib/systemd/system/netdata.service

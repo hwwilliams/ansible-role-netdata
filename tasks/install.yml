@@ -1,0 +1,51 @@
+---
+- name: Ensure Apt Cache Is up to Date (Apt)
+  become: true
+  apt:
+    update_cache: true
+    cache_valid_time: 360
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: Ensure Netdata Dependencies Are Present (General)
+  become: true
+  package:
+    name: "{{ netdata_packages_general }}"
+    state: present
+
+- name: Ensure Netdata Dependencies Are Present (Apt)
+  become: true
+  apt:
+    name: "{{ netdata_packages_apt }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 360
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: Ensure Netdata Dependencies Are Present (Dnf)
+  become: true
+  dnf:
+    name: "{{ netdata_packages_dnf }}"
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution == 'Fedora'
+
+- name: Ensure Netdata Dependencies Are Present (Yum)
+  become: true
+  yum:
+    name: "{{ netdata_packages_yum }}"
+    state: present
+    update_cache: true
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution != 'Fedora'
+
+- name: Ensure Netdata Github Repo Is up to Date
+  become: true
+  git:
+    repo: https://github.com/netdata/netdata.git
+    dest: "{{ netdata_source_dir }}"
+    version: "{{ netdata_repo_version }}"
+    depth: 100
+  notify: Install Netdata
