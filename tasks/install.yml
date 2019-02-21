@@ -48,5 +48,4 @@
     dest: "{{ netdata_source_dir }}"
     version: "{{ netdata_repo_version }}"
     depth: 100
-    force: true
   notify: Install Netdata
