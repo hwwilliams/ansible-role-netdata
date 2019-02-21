@@ -12,7 +12,7 @@
   service:
     name: netdata
     state: stopped
-  when: netdata_service.stat.exists == true
+  when: netdata_service.stat.exists
 
 - name: Ensure Netdata Is Installed and up to Date
   become: true
