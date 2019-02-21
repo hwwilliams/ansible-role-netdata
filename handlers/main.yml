@@ -10,7 +10,7 @@
 - name: Ensure Netdata Is Installed and up to Date
   become: true
   listen: Install Netdata
-  command: "{{ netdata_installer }} --dont-wait --dont-start-it"
+  command: "{{ netdata_install_cmd }}"
   args:
     chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
