@@ -2,7 +2,7 @@
 - include_vars:
     file: install-cmd-options.yml
   when:
-    - netdata_install_options is defined
+    - netdata_install_options | length > 0
     - netdata_uninstall == false
 
 - include_tasks:
