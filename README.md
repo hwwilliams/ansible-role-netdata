@@ -18,6 +18,10 @@ None.
 
 [vars/install-cmd-options.yml](vars/install-cmd-options.yml)
 
+[vars/systemd.yml](vars/systemd.yml)
+
+[vars/upstart.yml](vars/upstart.yml)
+
 ## License
 
 MIT
