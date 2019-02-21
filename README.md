@@ -15,6 +15,7 @@ None.
 ## Role Variables
 
 [defaults/main.yml](defaults/main.yml)
+[vars/install-cmd-options.yml](vars/install-cmd-options.yml)
 
 ## License
 
