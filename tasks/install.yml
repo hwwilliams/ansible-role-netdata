@@ -1,5 +1,5 @@
 ---
-- name: Ensure Apt Cache Is up to Date (debian)
+- name: Ensure Apt Cache Is up to Date (Apt)
   become: true
   apt:
     update_cache: true
@@ -41,7 +41,7 @@
     - ansible_os_family == 'RedHat'
     - ansible_distribution != 'Fedora'
 
-- name: Ensure Netdata Github Repo Is Up To Date
+- name: Ensure Netdata Github Repo Is up to Date
   become: true
   git:
     repo: https://github.com/netdata/netdata.git
