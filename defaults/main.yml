@@ -1,4 +1,43 @@
 ---
+# Netdata package dependencies
+# for Debian/Ubuntu and CentOS/Fedora/Redhat
+# systems.
+# 'General' is for packages that have the same
+# package name across distributions
+netdata_packages_apt:
+    - autoconf-archive
+    - autogen
+    - libmnl-dev
+    - pkg-config
+    - uuid-dev
+    - zlib1g-dev
+netdata_packages_dnf:
+    - autoconf-archive
+    - autogen
+    - findutils
+    - libmnl-devel
+    - libuuid-devel
+    - pkgconfig
+    - zlib-devel
+netdata_packages_general:
+    - autoconf
+    - automake
+    - curl
+    - gcc
+    - git
+    - make
+netdata_packages_yum:
+    - libmnl-devel
+    - libuuid-devel
+    - lm_sensors
+    - MySQL-python
+    - nc
+    - pkgconfig
+    - python
+    - python-psycopg2
+    - PyYAML
+    - zlib-devel
+
 # Version of the Netdata release to pull
 # By default is set as 'master'
 # Release verion number can also be used

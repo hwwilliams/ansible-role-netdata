@@ -10,60 +10,31 @@
 - name: Ensure Netdata Dependencies Are Present (General)
   become: true
   package:
-    name:
-      - autoconf
-      - automake
-      - curl
-      - gcc
-      - git
-      - make
+    name: "{{ netdata_packages_general }}"
     state: present
 
-- name: Ensure Netdata Dependencies Are Present (Debian)
+- name: Ensure Netdata Dependencies Are Present (Apt)
   become: true
   apt:
-    name:
-      - autoconf-archive
-      - autogen
-      - libmnl-dev
-      - pkg-config
-      - uuid-dev
-      - zlib1g-dev
+    name: "{{ netdata_packages_apt }}"
     state: present
     update_cache: true
     cache_valid_time: 360
   when:
     - ansible_os_family == 'Debian'
 
-- name: Ensure Netdata Dependencies Are Present (Fedora)
+- name: Ensure Netdata Dependencies Are Present (Dnf)
   become: true
   dnf:
-    name:
-      - autoconf-archive
-      - autogen
-      - findutils
-      - libmnl-devel
-      - libuuid-devel
-      - pkgconfig
-      - zlib-devel
+    name: "{{ netdata_packages_dnf }}"
   when:
     - ansible_os_family == 'RedHat'
     - ansible_distribution == 'Fedora'
 
-- name: Ensure Netdata Dependencies Are Present (RedHat)
+- name: Ensure Netdata Dependencies Are Present (Yum)
   become: true
   yum:
-    name:
-      - libmnl-devel
-      - libuuid-devel
-      - lm_sensors
-      - MySQL-python
-      - nc
-      - pkgconfig
-      - python
-      - python-psycopg2
-      - PyYAML
-      - zlib-devel
+    name: "{{ netdata_packages_yum }}"
     state: present
     update_cache: true
   when:
