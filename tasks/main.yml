@@ -1,4 +1,8 @@
 ---
+- include_vars:
+    file: install-cmd-options.yml
+  when: netdata_install_options is defined
+
 - include_tasks:
     file: install.yml
 

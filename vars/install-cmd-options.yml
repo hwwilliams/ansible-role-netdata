@@ -1,0 +1,2 @@
+---
+netdata_install_cmd: "./{{ netdata_installer }} --dont-wait --dont-start-it --{{ netdata_install_options | join (' --') }}"
