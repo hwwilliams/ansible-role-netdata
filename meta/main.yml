@@ -4,7 +4,7 @@ dependencies: []
 galaxy_info:
   role_name: netdata
   author: hwwilliams
-  description: Netdata installation for Debian/Ubuntu and CentOS/Fedora/Redhat based Linux systems.
+  description: Netdata installation for Debian/Ubuntu and CentOS/Fedora/Redhat based Linux systems
   license: license (MIT)
   min_ansible_version: 2.4
   platforms:
