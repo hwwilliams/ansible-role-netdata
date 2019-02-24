@@ -40,7 +40,7 @@ netdata_packages_yum:
 
 # Path to download the repo
 # By default is set to the offical netdata repo on Github
-# SSH github path can be used instead
+# SSH repo path can be used instead
 # e.g. ssh://git@github.com:netdata/netdata.git
 netdata_repo: https://github.com/netdata/netdata.git
 
