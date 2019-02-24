@@ -38,10 +38,17 @@ netdata_packages_yum:
     - PyYAML
     - zlib-devel
 
+# Path to download the repo
+# By default is set to the offical netdata repo on Github
+# SSH github path can be used instead
+# e.g. ssh://git@github.com:netdata/netdata.git
+netdata_repo: https://github.com/netdata/netdata.git
+
 # Version of the Netdata release to pull
 # By default is set as 'master'
 # Release verion number can also be used
 # e.g. 'v1.12.0'
+# Branch name can also be used
 netdata_repo_version: master
 
 # Directory that the Netdata Github repo

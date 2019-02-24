@@ -44,7 +44,7 @@
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
   git:
-    repo: https://github.com/netdata/netdata.git
+    repo: "{{ netdata_repo }}"
     dest: "{{ netdata_source_dir }}"
     version: "{{ netdata_repo_version }}"
     depth: 100
