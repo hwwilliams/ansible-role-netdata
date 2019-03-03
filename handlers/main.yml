@@ -29,7 +29,3 @@
     name: netdata
     state: restarted
     enabled: true
-
-- name: Restart Fail2ban
-  become: true
-  service: name=fail2ban state=restarted
