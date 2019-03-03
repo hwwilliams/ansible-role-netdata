@@ -38,6 +38,11 @@ netdata_packages_yum:
     - PyYAML
     - zlib-devel
 
+# If fail2ban is installed setting this to
+# true will change the logrotate.d/fail2ban
+# config so that netdata can read the file
+netdata_monitor_fail2ban: true
+
 # Path to download the repo
 # By default is set to the offical netdata repo on Github
 # SSH repo path can be used instead
