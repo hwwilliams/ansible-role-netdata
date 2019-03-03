@@ -1,0 +1,23 @@
+---
+- name: Check If Fail2ban Directory Exists
+  stat:
+    path: /etc/fail2ban
+  register: fail2ban_dir
+  failed_when: not fail2ban_dir.stat.exists
+  ignore_errors: true
+
+- name: Check If Fail2ban Logrotate.d Config File Exists
+  stat:
+    path: /etc/logrotate.d/fail2ban
+  register: fail2ban_logrotate
+  when: fail2ban_dir.stat.exists
+
+- name: Ensure Netdata Can Read Fail2ban Log File
+  lineinfile:
+    path: /etc/logrotate.d/fail2ban
+    line: '    create 0640 root netdata'
+    insertafter: '^/var/log/fail2ban.log {'
+    state: present
+  notify:
+    - Start and Enable Netdata
+    - Restart Fail2ban
