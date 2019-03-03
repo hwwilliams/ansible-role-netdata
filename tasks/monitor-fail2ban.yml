@@ -21,3 +21,4 @@
   notify:
     - Start and Enable Netdata
     - Restart Fail2ban
+  when: fail2ban_logrotate.stat.exists
