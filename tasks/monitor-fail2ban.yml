@@ -19,7 +19,4 @@
     line: '    create 0640 root netdata'
     insertafter: '^/var/log/fail2ban.log {'
     state: present
-  notify:
-    - Start and Enable Netdata
-    - Restart Fail2ban
   when: fail2ban_logrotate.stat.exists
