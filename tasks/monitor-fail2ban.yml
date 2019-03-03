@@ -13,6 +13,7 @@
   when: fail2ban_dir.stat.exists
 
 - name: Ensure Netdata Can Read Fail2ban Log File
+  become: true
   lineinfile:
     path: /etc/logrotate.d/fail2ban
     line: '    create 0640 root netdata'
