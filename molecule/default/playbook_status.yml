@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Ensure Netdata Is Reachable
+      uri:
+        url: http://127.0.0.1:19999
+        status: 200
+      register: netdata_status
+      until: netdata_status.status == 200
+      retries: 60
+      delay: 1
