@@ -31,7 +31,6 @@ scenario:
     - create
     # - prepare
     - converge
-    - converge_status
     - idempotence
     - check
     - side_effect
