@@ -69,6 +69,9 @@ netdata_source_dir: /usr/local/src/netdata
 # and its service but doesn't start it once the script finishes
 netdata_install_cmd: ./netdata-installer.sh --dont-wait --dont-start-it
 
+# Installation environment saved by Netdata installer
+netdata_env: /etc/netdata/.environment
+
 # Netdata installer script optional switches
 ######################
 # Syntax example for this variable:
@@ -125,6 +128,6 @@ netdata_uninstall: false
 
 # Default variables for uninstaller script
 netdata_uninstaller:
-    env: /etc/netdata/.environment
+    env: "{{ netdata_env }}"
     path: "{{ netdata_source_dir }}/packaging/installer"
     sh: netdata-uninstaller.sh
