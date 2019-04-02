@@ -24,7 +24,7 @@ before_script:
   - cd hwwilliams.$ROLE_NAME
 
 script:
-  - molecule test
+  - travis_wait molecule test
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
