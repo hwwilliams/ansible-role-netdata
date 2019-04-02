@@ -16,7 +16,7 @@ env:
     - MOLECULE_DISTRO: debian8
 
 install:
-  - pip install molecule=2.19 docker
+  - pip install molecule==2.19 docker
 
 before_script:
   - cd ../
