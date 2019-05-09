@@ -38,10 +38,16 @@ netdata_packages_yum:
     - PyYAML
     - zlib-devel
 
+## Enable Netdata montioring of extra services
 # If fail2ban is installed setting this to
 # true will change the logrotate.d/fail2ban
 # config so that netdata can read the file
 netdata_monitor_fail2ban: false
+# If set to true Netdata will allow monitoring
+# of events in SEL, temperatures, voltages,
+# currents, power use, and fan speeds
+# Not available on Debian Jessie or Stretch
+netdata_monitor_ipmi: false
 
 # Path to download the repo
 # By default is set to the offical netdata repo on Github
