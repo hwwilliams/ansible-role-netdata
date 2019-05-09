@@ -1,0 +1,17 @@
+---
+- name: Ensure Netdata IPMI Monitoring Dependencies (Apt)
+  become: true
+  package:
+    name: libipmimonitoring-dev
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_distribution == 'Ubuntu'
+
+- name: Ensure Netdata IPMI Monitoring Dependencies (Yum)
+  become: true
+  package:
+    name: freeipmi-devel
+    state: present
+  when:
+    - ansible_os_family == 'RedHat'
