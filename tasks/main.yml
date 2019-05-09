@@ -11,11 +11,6 @@
     - netdata_install_options | length > 0
     - not netdata_uninstall
 
-- name: Include Main Netdata Install Task
-  include_tasks:
-    file: install.yml
-  when: not netdata_uninstall
-
 - name: Include Monitor Fail2ban Task
   include_tasks:
     file: monitor-fail2ban.yml
@@ -29,6 +24,11 @@
   when:
     - not netdata_uninstall
     - netdata_monitor_ipmi
+
+- name: Include Main Netdata Install Task
+  include_tasks:
+    file: install.yml
+  when: not netdata_uninstall
 
 - name: Include Netdata Uninstaller (If Configured)
   include_tasks:
