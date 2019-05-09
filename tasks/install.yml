@@ -39,7 +39,7 @@
     update_cache: true
   when:
     - ansible_os_family == 'RedHat'
-    - ansible_distribution != 'Fedora'
+    - ansible_distribution == 'CentOS'
 
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
