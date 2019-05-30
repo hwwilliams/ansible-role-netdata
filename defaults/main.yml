@@ -1,4 +1,25 @@
 ---
+#
+netdata_config:
+    - name: global
+      options: |
+        history = 3600
+    - name: web
+      options: []
+    - name: plugins
+      options: []
+    - name: health
+      options: []
+    - name: registry
+      options: []
+    - name: cloud
+      options: []
+    - name: backend
+      options: []
+    - name: statsd
+      options: []
+
+
 # Netdata package dependencies
 # for Debian/Ubuntu and CentOS/Fedora/Redhat
 # systems.
