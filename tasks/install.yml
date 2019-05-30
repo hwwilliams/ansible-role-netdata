@@ -53,7 +53,3 @@
     version: "{{ netdata_repo_version }}"
     depth: 100
   notify: Install Netdata
-
-- name: Include Configuration File
-  include_tasks:
-    file: config.yml
