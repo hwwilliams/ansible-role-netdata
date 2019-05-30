@@ -55,7 +55,8 @@
 
 - name: Check for Existing Netdata Service
   become: true
-  stat: path="{{ netdata_service_path }}"
+  stat:
+    path:"{{ netdata_service_path }}"
   register: netdata_service
 
 - name: Stop Netdata Service If Present
