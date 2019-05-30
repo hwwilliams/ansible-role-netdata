@@ -41,6 +41,10 @@
     - ansible_os_family == 'RedHat'
     - ansible_distribution == 'CentOS'
 
+- name: Include Build Sequence of Installation Command
+  include_tasks:
+    file: install-cmd.yml
+
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
   git:
