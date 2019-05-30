@@ -1,31 +1,4 @@
 ---
-- name: Check for Existing Netdata Service
+- name: Restart and Enable Netdata
   become: true
-  listen: Install Netdata
-  stat:
-    path: "{{ netdata_service_path }}"
-  register: netdata_service
-  notify: Stop Netdata Service If Present
-
-- name: Stop Netdata Service If Present
-  become: true
-  service:
-    name: netdata
-    state: stopped
-  when: netdata_service.stat.exists
-
-- name: Ensure Netdata Is Installed and up to Date
-  become: true
-  listen: Install Netdata
-  command: "{{ netdata_install_cmd }}"
-  args:
-    chdir: "{{ netdata_source_dir }}"
-    creates: /usr/sbin/netdata
-
-- name: Start and Enable Netdata
-  become: true
-  listen: Install Netdata
-  service:
-    name: netdata
-    state: restarted
-    enabled: true
+  service: name=netdata state=restarted enabled=true

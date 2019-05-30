@@ -52,4 +52,24 @@
     dest: "{{ netdata_source_dir }}"
     version: "{{ netdata_repo_version }}"
     depth: 100
-  notify: Install Netdata
+
+- name: Check for Existing Netdata Service
+  become: true
+  stat: path="{{ netdata_service_path }}"
+  register: netdata_service
+
+- name: Stop Netdata Service If Present
+  become: true
+  service: name=netdata state=stopped
+  when: netdata_service.stat.exists
+
+- name: Ensure Netdata Is Installed and up to Date
+  become: true
+  command: "{{ netdata_install_cmd }}"
+  args:
+    creates: /usr/sbin/netdata
+
+- name: Include Configuration File
+  include_tasks:
+    file: config.yml
+  notify: Restart and Enable Netdata

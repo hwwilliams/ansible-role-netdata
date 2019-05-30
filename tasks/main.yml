@@ -23,14 +23,6 @@
     file: install.yml
   when: not netdata_uninstall
 
-- name: Start Netdata Installation
-  meta: flush_handlers
-
-- name: Include Configuration File
-  include_tasks:
-    file: config.yml
-  when: not netdata_uninstall
-
 - name: Include Netdata Uninstaller (If Configured)
   include_tasks:
     file: uninstall.yml
