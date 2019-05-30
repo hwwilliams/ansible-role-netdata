@@ -1,0 +1,6 @@
+{% for section in netdata_config %}
+{% if section.options >= 1 %}}
+[{{ section.name }}]
+    {{ section.options }}
+{% endif %}
+{% endfor %}
