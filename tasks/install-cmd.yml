@@ -5,7 +5,7 @@
 
 - name: Set Base Netdata Installation Variable
   set_fact:
-    netdata_install_cmd: "{{ netdata_install_script.path }}/{{ netdata_install_script.sh }} --dont-wait --dont-start-it"
+    netdata_install_cmd: "./{{ netdata_install_script }} --dont-wait --dont-start-it"
 
 - name: Add Netdata Auto Update Switch to Installation Variable (If Configured)
   set_fact:

@@ -68,6 +68,7 @@
   become: true
   command: "{{ netdata_install_cmd }}"
   args:
+    chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
 
 - name: Include Configuration File

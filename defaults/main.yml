@@ -106,9 +106,7 @@ netdata_source_dir: /usr/local/src/netdata
 # waiting for user interaction on prompts
 # '--dont-start-it' makes the script install netdata
 # and its service but doesn't start it once the script finishes
-netdata_install_script:
-  path: "{{ netdata_source_dir }}"
-  sh: netdata-installer.sh
+netdata_install_script: netdata-installer.sh
 
 # Installation environment saved by Netdata installer
 netdata_env: /etc/netdata/.environment
