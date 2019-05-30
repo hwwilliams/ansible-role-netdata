@@ -1,0 +1,9 @@
+---
+netdata_auto_update: "--auto-update"
+netdata_disable_go: "--disable-go"
+netdata_disable_lto: "--disable-lto"
+netdata_disable_plugin_freeipmi: "--disable-plugin-freeipmi"
+netdata_disable_plugin_nfacct: "--disable-plugin-nfacct"
+netdata_disable_telemetry: "--disable-telemetry"
+netdata_disable_x86_sse: "--disable-x86-sse"
+netdata_installation_path: "--install {{ netdata_install_opts.installation_path }}"
