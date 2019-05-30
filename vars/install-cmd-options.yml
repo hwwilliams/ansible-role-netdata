@@ -1,5 +1,0 @@
----
-# If Netdata installer options are found to be set
-# within netdata_install_options then use the
-# following install command instead of the default
-netdata_install_cmd: "./netdata-installer.sh --dont-wait --dont-start-it --{{ netdata_install_options | join (' --') }}"
