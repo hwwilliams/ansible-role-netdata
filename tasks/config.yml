@@ -15,4 +15,4 @@
     src: templates/netdata.conf.j2
     dest: "{{ netdata_config_path }}/netdata.conf"
     mode: 0644
-  notify: Start and Enable Netdata
+  notify: Restart and Enable Netdata
