@@ -19,6 +19,18 @@ netdata_config:
     - name: statsd
       options: []
 
+## Installation options
+# Example for installation_path
+# installation_path: '/opt'
+netdata_install_opts:
+  auto_update: false
+  disable_go: false
+  disable_lto: false
+  disable_plugin_freeipmi: false
+  disable_plugin_nfacct: false
+  disable_telemetry: false
+  disable_x86_sse: false
+  installation_path: default
 
 # Netdata package dependencies
 # for Debian/Ubuntu and CentOS/Fedora/Redhat
@@ -94,60 +106,12 @@ netdata_source_dir: /usr/local/src/netdata
 # waiting for user interaction on prompts
 # '--dont-start-it' makes the script install netdata
 # and its service but doesn't start it once the script finishes
-netdata_install_cmd: ./netdata-installer.sh --dont-wait --dont-start-it
+netdata_install_script:
+  path: "{{ netdata_source_dir }}"
+  sh: netdata-installer.sh
 
 # Installation environment saved by Netdata installer
 netdata_env: /etc/netdata/.environment
-
-# Netdata installer script optional switches
-######################
-# Syntax example for this variable:
-# netdata_install_options:
-#     - install /opt
-#     - auto-update
-######################
-#
-# Available switches are listed below:
-#    --install /PATH/TO/INSTALL
-#         If you give: --install /opt
-#         netdata will be installed in /opt/netdata
-#    --dont-start-it
-#         Do not (re)start netdata.
-#         Just install it.
-#    --dont-wait
-#         Do not wait for the user to press ENTER.
-#         Start immediately building it.
-#    --auto-update | -u
-#         Install netdata-updater to cron,
-#         to update netdata automatically once per day
-#         (can only be done for installations from git)
-#    --enable-plugin-freeipmi
-#    --disable-plugin-freeipmi
-#         Enable/disable the FreeIPMI plugin.
-#         Default: enable it when libipmimonitoring is available.
-#    --enable-plugin-nfacct
-#    --disable-plugin-nfacct
-#         Enable/disable the nfacct plugin.
-#         Default: enable it when libmnl and libnetfilter_acct are available.
-#    --enable-lto
-#    --disable-lto
-#         Enable/disable Link-Time-Optimization
-#         Default: enabled
-#    --disable-x86-sse
-#         Disable SSE instructions
-#         Default: enabled
-#    --zlib-is-really-here
-#    --libs-are-really-here
-#         If you get errors about missing zlib,
-#         or libuuid but you know it is available,
-#         you have a broken pkg-config.
-#         Use this option to allow it continue
-#         without checking pkg-config.
-#    --disable-telemetry
-#         Use this flag to opt-out from our anonymous telemetry progam.
-#    --disable-go
-#         Flag to disable installation of go.d.plugin
-netdata_install_options: []
 
 # If set to true Netdata will be uninstalled using
 # the official uninstaller script
