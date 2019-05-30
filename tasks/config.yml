@@ -1,0 +1,18 @@
+---
+- name: Set Netdata Configuration File Path Variable (If default)
+  set_fact:
+    netdata_config_path: /etc/netdata
+  when: netdata_install_opts.installation_path == 'default'
+
+- name: Set Netdata Configuration File Path Variable (If not default)
+  set_fact:
+    netdata_config_path: "{{ netdata_install_opts.installation_path }}/etc/netdata"
+  when: not netdata_install_opts.installation_path == 'default'
+
+- name: Ensure Netdata Configuration File Is Present
+  become: true
+  template:
+    src: templates/netdata.conf.j2
+    dest: "{{ netdata_config_path }}/netdata.conf"
+    mode: 0644
+  notify: Start and Enable Netdata
