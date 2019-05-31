@@ -61,24 +61,6 @@
     netdata_service_installation: /etc/rc.d/init.d/netdata
   when: ansible_service_mgr | lower == 'upstart'
 
-- name: Check for Existing Netdata Service
-  become: true
-  stat:
-    path: "{{ netdata_service_installation }}"
-  register: netdata_service
-
-- name: Stop Netdata Service If Present
-  become: true
-  service: name=netdata state=stopped
-  when: netdata_service.stat.exists | bool
-
-- name: Ensure Netdata Is Installed and up to Date
-  become: true
-  command: "{{ netdata_install_cmd }}"
-  args:
-    chdir: "{{ netdata_source_dir }}"
-    creates: /usr/sbin/netdata
-
 - name: Configure Netdata Service Files
   become: true
   copy:
@@ -87,3 +69,14 @@
     dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
+
+- name: Stop Netdata Service If Present
+  become: true
+  service: name=netdata state=stopped
+
+- name: Ensure Netdata Is Installed and up to Date
+  become: true
+  command: "{{ netdata_install_cmd }}"
+  args:
+    chdir: "{{ netdata_source_dir }}"
+    creates: /usr/sbin/netdata
