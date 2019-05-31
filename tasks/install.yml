@@ -27,19 +27,23 @@
 - name: Download Netdata Dependency Script
   become: true
   get_url:
-    url: "{{ netdata_dependencies_sh }}"
+    url: "{{ netdata_dependency.sh }}"
     dest: "{{ tempdirectory.path }}"
     mode: 0770
+
+- name: Set Netdata Dependency Script Path
+  set_fact:
+    netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
 
 - name: Confirm Netdata Dependency Script Is Present
   become: true
   stat:
-    path: "{{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }}"
+    path: "{{ netdata_dependencies }}"
   register: netdata_temp_directory_sh
 
 - name: Install Netdata Dependencies
   become: true
-  command: "bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
+  command: "bash {{ netdata_dependencies }} netdata --dont-wait --non-interactive"
   register: netdata_dependencies_script
   changed_when: '"All Done!" in netdata_dependencies_script.stdout'
   failed_when: netdata_dependencies_script.rc == 1

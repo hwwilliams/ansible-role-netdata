@@ -21,7 +21,8 @@ netdata_config:
 
 # Official Netdata script that checks for and installs dependencies
 # System agnostic
-netdata_dependencies_sh: "https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh"
+netdata_dependency:
+  sh: "https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh"
 
 ## Installation options
 # Example for netdata_opt_installation_path
