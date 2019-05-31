@@ -1,6 +1,0 @@
----
-# The path to the Netdata service file for systems
-# using Systemd
-netdata_service:
-    source_path: "{{ netdata_source_dir }}/system/netdata.service"
-    installation_path: /usr/lib/systemd/system/netdata.service
