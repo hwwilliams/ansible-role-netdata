@@ -10,7 +10,7 @@ Also on [Ansible Galaxy](https://galaxy.ansible.com/hwwilliams/netdata).
 
 ## Requirements
 
-[requirements.yml](requirements.yml)
+[Netdata](https://my-netdata.io/) suggests having the Epel Repo enabled on RedHat based systems in order to have access to all dependencies.
 
 ## Role Variables
 
