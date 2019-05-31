@@ -39,7 +39,7 @@
 
 - name: Install Netdata Dependencies
   become: true
-  command: "/usr/env bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
+  command: "bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
   register: netdata_dependencies_script
   changed_when: false
   failed_when: netdata_dependencies_script.rc > 0
