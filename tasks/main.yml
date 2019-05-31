@@ -18,7 +18,7 @@
     file: install-cmd.yml
   when: not netdata_uninstall | bool
 
-- name: Include Kernel Same-Page Merging Task
+- name: Include Kernel Same-Page Merging Task (If Configured)
   include_tasks:
     file: ksm.yml
   when:
