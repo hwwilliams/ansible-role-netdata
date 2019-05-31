@@ -18,9 +18,10 @@
 
 - name: Create Temporary Netdata Dependency Script Directory
   become: true
-  tempfile:
-    prefix: "netdata"
+  file:
+    path: "/tmp/netdata_dependencies_script"
     state: directory
+    mode: 0770
   register: tempdirectory
 
 - name: Download Netdata Dependency Script
