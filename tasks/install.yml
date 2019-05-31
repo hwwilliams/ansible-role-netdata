@@ -29,6 +29,7 @@
   get_url:
     url: "{{ netdata_dependencies_sh }}"
     dest: "{{ tempdirectory.path }}"
+    mode: 0770
 
 - name: Confirm Netdata Dependency Script Is Present
   become: true
