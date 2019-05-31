@@ -6,38 +6,22 @@
     cache_valid_time: 360
   when: ansible_os_family == 'Debian'
 
-- name: Ensure Netdata Dependencies Are Present (General)
+- name: Create Temporary Netdata Directory
   become: true
-  package:
-    name: "{{ netdata_packages_general }}"
-    state: present
+  tempfile:
+    prefix: "netdata"
+    state: directory
+  register: tempdirectory
 
-- name: Ensure Netdata Dependencies Are Present (Apt)
+- name: Download Netdata Dependency Script
   become: true
-  apt:
-    name: "{{ netdata_packages_apt }}"
-    state: present
-    update_cache: true
-    cache_valid_time: 360
-  when: ansible_os_family == 'Debian'
+  get_url:
+    url: "{{ netdata_dependencies_sh }}"
+    dest: "{{ tempdirectory.path }}"
 
-- name: Ensure Netdata Dependencies Are Present (Dnf)
+- name: Install Netdata Dependencies
   become: true
-  dnf:
-    name: "{{ netdata_packages_dnf }}"
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution == 'Fedora'
-
-- name: Ensure Netdata Dependencies Are Present (Yum)
-  become: true
-  yum:
-    name: "{{ netdata_packages_yum }}"
-    state: present
-    update_cache: true
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution == 'CentOS'
+  command: "/usr/env bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
 
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
