@@ -10,7 +10,7 @@ Also on [Ansible Galaxy](https://galaxy.ansible.com/hwwilliams/netdata).
 
 ## Requirements
 
-None.
+[requirements.yml](requirements.yml)
 
 ## Role Variables
 

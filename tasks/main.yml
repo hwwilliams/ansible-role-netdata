@@ -1,4 +1,8 @@
 ---
+- name: Include Epel Repo Role
+  import_role:
+    name: geerlingguy.repo-epel
+
 - name: Include Monitor Fail2ban Task
   include_tasks:
     file: monitor-fail2ban.yml
