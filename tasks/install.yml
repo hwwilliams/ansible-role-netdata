@@ -29,6 +29,11 @@
 - name: Install Netdata Dependencies
   become: true
   command: "/usr/env bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
+  register: netdata_dependencies_script
+  changed_when:
+    - "'All required packages are already installed' not in netdata_dependencies_script.stdout"
+    - "'All required packages are already installed' not in netdata_dependencies_script.stderr"
+  failed_when: netdata_dependencies_script.rc > 0
 
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
