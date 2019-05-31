@@ -18,11 +18,20 @@
 
 - name: Create Temporary Netdata Dependency Script Directory
   become: true
-  file:
-    path: "/tmp/netdata_dependencies_script"
+  tempfile:
+    prefix: netdata
     state: directory
-    mode: 0770
   register: tempdirectory
+
+- name: Set Netdata Dependency Script Path
+  set_fact:
+    netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
+
+- name: Check if Netdata Dependency Script Is Present
+  become: true
+  stat:
+    path: "{{ netdata_dependencies }}"
+  register: netdata_temp_directory_sh
 
 - name: Download Netdata Dependency Script
   become: true
@@ -30,10 +39,8 @@
     url: "{{ netdata_dependency.sh }}"
     dest: "{{ tempdirectory.path }}"
     mode: 0770
-
-- name: Set Netdata Dependency Script Path
-  set_fact:
-    netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
+  register: netdata_download_script
+  when: not netdata_temp_directory_sh.stat.exists | bool
 
 - name: Confirm Netdata Dependency Script Is Present
   become: true
@@ -87,8 +94,15 @@
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
 
-- name: Create Temporary Netdata Dependency Script Directory
+- name: Check if Netdata Temp Directory Exists
+  become: true
+  stat:
+    path: "{{ tempdirectory.path }}"
+  register: netdata_tempdirectory
+
+- name: Remove Temporary Netdata Temp Directory
   become: true
   file:
     path: "{{ tempdirectory.path }}"
     state: absent
+  when: netdata_tempdirectory.stat.exists | bool
