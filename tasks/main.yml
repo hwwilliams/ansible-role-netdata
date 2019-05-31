@@ -33,7 +33,6 @@
 - name: Include Configuration File
   include_tasks:
     file: config.yml
-  notify: Restart and Enable Netdata
   when: not netdata_uninstall
 
 - name: Include Netdata Uninstaller (If Configured)
