@@ -20,17 +20,16 @@ netdata_config:
       options: []
 
 ## Installation options
-# Example for installation_path
-# installation_path: '/opt'
-netdata_install_opts:
-  auto_update: false
-  disable_go: false
-  disable_lto: false
-  disable_plugin_freeipmi: false
-  disable_plugin_nfacct: false
-  disable_telemetry: false
-  disable_x86_sse: false
-  installation_path: default
+# Example for netdata_opt_installation_path
+# netdata_opt_installation_path: '/opt'
+netdata_opt_auto_update: false
+netdata_opt_disable_go: false
+netdata_opt_disable_lto: false
+netdata_opt_disable_plugin_freeipmi: false
+netdata_opt_disable_plugin_nfacct: false
+netdata_opt_disable_telemetry: false
+netdata_opt_disable_x86_sse: false
+netdata_opt_installation_path: default
 
 # Netdata package dependencies
 # for Debian/Ubuntu and CentOS/Fedora/Redhat
