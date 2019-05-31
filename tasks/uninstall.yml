@@ -1,10 +1,12 @@
 ---
 - name: Run Netdata Uninstaller Script
+  become: true
   command: "./{{ netdata_uninstaller.sh }} -y -f -e {{ netdata_uninstaller.env }}"
   args:
     chdir: "{{ netdata_uninstaller.path }}"
 
 - name: Remove Netdata GitHub Repo
+  become: true
   file:
-    state: absent
     path: "{{ netdata_source_dir }}"
+    state: absent
