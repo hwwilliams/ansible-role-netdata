@@ -33,7 +33,7 @@
   become: true
   command: "/usr/env bash {{ tempdirectory.path }}/{{ netdata_dependencies_sh | basename }} netdata --dont-wait --non-interactive"
   register: netdata_dependencies_script
-  changed_when: "'All required packages are already installed' not in netdata_dependencies_script.stdout"
+  changed_when: '"All required packages are already installed" not in netdata_dependencies_script.stdout'
   failed_when: netdata_dependencies_script.rc > 0
 
 - name: Ensure Netdata Github Repo Is up to Date
