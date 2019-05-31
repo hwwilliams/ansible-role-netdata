@@ -29,6 +29,7 @@ netdata_opt_disable_plugin_freeipmi: false
 netdata_opt_disable_plugin_nfacct: false
 netdata_opt_disable_telemetry: false
 netdata_opt_disable_x86_sse: false
+netdata_opt_enable_ksm: false
 netdata_opt_installation_path: default
 
 # Netdata package dependencies
