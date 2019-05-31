@@ -41,10 +41,6 @@
     - ansible_os_family == 'RedHat'
     - ansible_distribution == 'CentOS'
 
-- name: Include Build Sequence of Installation Command
-  include_tasks:
-    file: install-cmd.yml
-
 - name: Ensure Netdata Github Repo Is up to Date
   become: true
   git:
@@ -92,9 +88,4 @@
     remote_src: true
     dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
-  notify: Restart and Enable Netdata
-
-- name: Include Configuration File
-  include_tasks:
-    file: config.yml
   notify: Restart and Enable Netdata
