@@ -3,41 +3,41 @@
   include_tasks:
     file: monitor-fail2ban.yml
   when:
-    - not netdata_uninstall
-    - netdata_monitor_fail2ban
+    - not netdata_uninstall | bool
+    - netdata_monitor_fail2ban | bool
 
 - name: Include Monitor IPMI Task
   include_tasks:
     file: monitor-ipmi.yml
   when:
-    - not netdata_uninstall
-    - netdata_monitor_ipmi
+    - not netdata_uninstall | bool
+    - netdata_monitor_ipmi | bool
 
 - name: Include Build Sequence of Installation Command
   include_tasks:
-    file: install-cmd.yml
-  when: not netdata_uninstall
+    file: install-cmd.yml | bool
+  when: not netdata_uninstall | bool
 
 - name: Include Kernel Same-Page Merging Task
   include_tasks:
     file: ksm.yml
   when:
-    - not netdata_uninstall
-    - netdata_opt_enable_ksm
+    - not netdata_uninstall | bool
+    - netdata_opt_enable_ksm | bool
 
 - name: Include Main Netdata Install Task
   include_tasks:
     file: install.yml
-  when: not netdata_uninstall
+  when: not netdata_uninstall | bool
 
 - name: Include Configuration File
   include_tasks:
     file: config.yml
-  when: not netdata_uninstall
+  when: not netdata_uninstall | bool
 
 - name: Include Netdata Uninstaller (If Configured)
   include_tasks:
     file: uninstall.yml
-  when: netdata_uninstall
+  when: netdata_uninstall | bool
   tags:
     - netdata_uninstall

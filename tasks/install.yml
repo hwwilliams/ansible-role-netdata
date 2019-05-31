@@ -4,8 +4,7 @@
   apt:
     update_cache: true
     cache_valid_time: 360
-  when:
-    - ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 - name: Ensure Netdata Dependencies Are Present (General)
   become: true
@@ -20,8 +19,7 @@
     state: present
     update_cache: true
     cache_valid_time: 360
-  when:
-    - ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 - name: Ensure Netdata Dependencies Are Present (Dnf)
   become: true
@@ -72,7 +70,7 @@
 - name: Stop Netdata Service If Present
   become: true
   service: name=netdata state=stopped
-  when: netdata_service.stat.exists
+  when: netdata_service.stat.exists | bool
 
 - name: Ensure Netdata Is Installed and up to Date
   become: true

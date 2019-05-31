@@ -3,14 +3,14 @@
   stat:
     path: /etc/fail2ban
   register: fail2ban_dir
-  failed_when: not fail2ban_dir.stat.exists
+  failed_when: not fail2ban_dir.stat.exists | bool
   ignore_errors: true
 
 - name: Check If Fail2ban Logrotate.d Config File Exists
   stat:
     path: /etc/logrotate.d/fail2ban
   register: fail2ban_logrotate
-  when: fail2ban_dir.stat.exists
+  when: fail2ban_dir.stat.exists | bool
 
 - name: Ensure Netdata Can Read Fail2ban Log File
   become: true
@@ -19,4 +19,4 @@
     line: '    create 0640 root netdata'
     insertafter: '^/var/log/fail2ban.log {'
     state: present
-  when: fail2ban_logrotate.stat.exists
+  when: fail2ban_logrotate.stat.exists | bool
