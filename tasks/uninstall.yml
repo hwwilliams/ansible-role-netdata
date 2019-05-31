@@ -16,11 +16,11 @@
   command: "./{{ netdata_uninstaller.sh }} -y -f -e {{ netdata_uninstaller.env }}"
   args:
     chdir: "{{ netdata_uninstaller.path }}"
-  when: netdata_service_path.stat.exists
+  when: netdata_service_path.stat.exists | bool
 
 - name: Remove Netdata GitHub Repo Directory
   become: true
   file:
     path: "{{ netdata_source_dir }}"
     state: absent
-  when: netdata_source_path.stat.exists
+  when: netdata_source_path.stat.exists | bool
