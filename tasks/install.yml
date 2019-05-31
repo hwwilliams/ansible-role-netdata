@@ -10,7 +10,6 @@
   become: true
   yum:
     update_cache: true
-    state: present
   when: ansible_os_family == 'RedHat'
 
 - name: Create Temporary Netdata Directory
