@@ -36,6 +36,7 @@
     repo: "{{ netdata_repo }}"
     dest: "{{ netdata_source_dir }}"
     version: "{{ netdata_repo_version }}"
+    depth: 100
 
 - name: Set Netdata Service File Variables (Systemd)
   set_fact:
