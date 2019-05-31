@@ -1,0 +1,10 @@
+---
+- name: Enable Kernel Same-Page Merging
+  become: true
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+  loop:
+    - { src: 'files/ksm-run', dest: '/sys/kernel/mm/ksm/run' }
+    - { src: 'files/ksm-sleep_millisecs', dest: '/sys/kernel/mm/ksm/sleep_millisecs' }
