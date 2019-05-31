@@ -71,6 +71,25 @@
     chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
 
+- name: Set Netdata Service File Mode Variable (Systemd)
+  set_fact:
+    netdata_service_permission: 0664
+  when: ansible_service_mgr | lower == 'systemd'
+
+- name: Set Netdata Service File Mode Variable (Upstart)
+  set_fact:
+    netdata_service_permission: 0755
+  when: ansible_service_mgr | lower == 'upstart'
+
+- name: Configure Netdata Service Files
+  become: true
+  copy:
+    src: "{{ netdata_service.source_path }}"
+    remote_src: true
+    dest: "{{ netdata_service.installation_path }}"
+    mode: "{{ netdata_service_permission }}"
+  notify: Restart and Enable Netdata
+
 - name: Include Configuration File
   include_tasks:
     file: config.yml
