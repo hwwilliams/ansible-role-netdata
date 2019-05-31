@@ -16,7 +16,7 @@
   failed_when: yum_update.rc == 1
   when: ansible_os_family == 'RedHat'
 
-- name: Create Temporary Netdata Directory
+- name: Create Temporary Netdata Dependency Script Directory
   become: true
   tempfile:
     prefix: "netdata"
@@ -73,3 +73,9 @@
     dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
+
+- name: Create Temporary Netdata Dependency Script Directory
+  become: true
+  file:
+    path: "{{ tempdirectory.path }}"
+    state: absent
