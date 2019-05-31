@@ -114,8 +114,6 @@ netdata_env: /etc/netdata/.environment
 # If set to true Netdata will be uninstalled using
 # the official uninstaller script
 netdata_uninstall: false
-
-# Default variables for uninstaller script
 netdata_uninstaller:
     env: "{{ netdata_env }}"
     path: "{{ netdata_source_dir }}/packaging/installer"
