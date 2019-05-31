@@ -39,5 +39,4 @@
   include_tasks:
     file: uninstall.yml
   when: netdata_uninstall | bool
-  tags:
-    - netdata_uninstall
+  tags: ["netdata_uninstall"]
