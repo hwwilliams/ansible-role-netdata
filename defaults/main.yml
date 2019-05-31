@@ -19,6 +19,8 @@ netdata_config:
     - name: statsd
       options: []
 
+# Official Netdata script that checks for and installs dependencies
+# System agnostic
 netdata_dependencies_sh: "https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh"
 
 ## Installation options
