@@ -56,7 +56,7 @@
 - name: Check for Existing Netdata Service
   become: true
   stat:
-    path: "{{ netdata_service.installation_path }}"
+    path: "{{ netdata_service_installation }}"
   register: netdata_service
 
 - name: Stop Netdata Service If Present
@@ -71,22 +71,26 @@
     chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
 
-- name: Set Netdata Service File Mode Variable (Systemd)
+- name: Set Netdata Service File Variables (Systemd)
   set_fact:
     netdata_service_permission: 0664
+    netdata_service_source: "{{ netdata_source_dir }}/system/netdata.service"
+    netdata_service_installation: /usr/lib/systemd/system/netdata.service
   when: ansible_service_mgr | lower == 'systemd'
 
-- name: Set Netdata Service File Mode Variable (Upstart)
+- name: Set Netdata Service File Variables (Upstart)
   set_fact:
     netdata_service_permission: 0755
+    netdata_service_source: "{{ netdata_source_dir }}/system/netdata-init-d"
+    netdata_service_installation: /etc/rc.d/init.d/netdata
   when: ansible_service_mgr | lower == 'upstart'
 
 - name: Configure Netdata Service Files
   become: true
   copy:
-    src: "{{ netdata_service.source_path }}"
+    src: "{{ netdata_service_source }}"
     remote_src: true
-    dest: "{{ netdata_service.installation_path }}"
+    dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
 
