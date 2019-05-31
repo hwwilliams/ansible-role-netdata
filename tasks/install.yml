@@ -8,8 +8,10 @@
 
 - name: Ensure Pacakge Cache Is up to Date (Yum)
   become: true
-  yum:
-    update_cache: true
+  command: yum check-update
+  register: yum_update
+  changed_when: yum_update.rc == 100
+  failed_when: yum_update == 1
   when: ansible_os_family == 'RedHat'
 
 - name: Create Temporary Netdata Directory
