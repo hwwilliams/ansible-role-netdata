@@ -24,18 +24,7 @@ provisioner:
 scenario:
   name: default
   test_sequence:
-    - lint
-    - destroy
-    # - dependency
-    - syntax
-    - create
-    # - prepare
-    - converge
-    - idempotence
-    - check
-    - side_effect
-    - verify
-    - destroy
+    - default
 verifier:
   name: testinfra
   lint:
