@@ -19,6 +19,8 @@ netdata_config:
     - name: statsd
       options: []
 
+netdata_dependencies_sh: "https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh"
+
 ## Installation options
 # Example for netdata_opt_installation_path
 # netdata_opt_installation_path: '/opt'
@@ -31,45 +33,6 @@ netdata_opt_disable_telemetry: false
 netdata_opt_disable_x86_sse: false
 netdata_opt_enable_ksm: false
 netdata_opt_installation_path: default
-
-# Netdata package dependencies
-# for Debian/Ubuntu and CentOS/Fedora/Redhat
-# systems.
-# 'General' is for packages that have the same
-# package name across distributions
-netdata_packages_apt:
-    - autoconf-archive
-    - autogen
-    - libmnl-dev
-    - pkg-config
-    - uuid-dev
-    - zlib1g-dev
-netdata_packages_dnf:
-    - autoconf-archive
-    - autogen
-    - findutils
-    - libmnl-devel
-    - libuuid-devel
-    - pkgconfig
-    - zlib-devel
-netdata_packages_general:
-    - autoconf
-    - automake
-    - curl
-    - gcc
-    - git
-    - make
-netdata_packages_yum:
-    - libmnl-devel
-    - libuuid-devel
-    - lm_sensors
-    - MySQL-python
-    - nc
-    - pkgconfig
-    - python
-    - python-psycopg2
-    - PyYAML
-    - zlib-devel
 
 ## Enable Netdata montioring of extra services
 # If fail2ban is installed setting this to
