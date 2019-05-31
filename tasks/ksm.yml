@@ -1,10 +1,9 @@
 ---
 - name: Enable Kernel Same-Page Merging
   become: true
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: 0644
+  lineinfile:
+    line: "{{ item }}"
+    path: /etc/rc.local
   loop:
-    - { src: 'files/ksm-run', dest: '/sys/kernel/mm/ksm/run' }
-    - { src: 'files/ksm-sleep_millisecs', dest: '/sys/kernel/mm/ksm/sleep_millisecs' }
+    - echo 1 >/sys/kernel/mm/ksm/run
+    - echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs
