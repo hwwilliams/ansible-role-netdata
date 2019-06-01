@@ -1,41 +1,4 @@
 ---
-- name: Ensure Pacakge Cache Is up to Date (Apt)
-  become: true
-  apt:
-    update_cache: true
-    cache_valid_time: 360
-  when: ansible_os_family == 'Debian'
-
-- name: Ensure Pacakge Cache Is up to Date (Yum)
-  become: true
-  command: yum makecache
-  args:
-    warn: false
-  register: yum_cache
-  changed_when: yum_cache.rc == 100
-  failed_when: yum_cache.rc == 1
-  when: ansible_os_family == 'RedHat'
-
-- name: Ensure Curl Is Installed
-  package:
-    name: curl
-    state: present
-
-- name: Install Netdata Dependencies
-  become: true
-  command: "bash <(curl -Ss {{ netdata_dependency.sh }}) netdata --dont-wait --non-interactive"
-  register: netdata_dependencies_script
-  changed_when: '"All Done!" in netdata_dependencies_script.stdout'
-  failed_when: netdata_dependencies_script.rc == 1
-
-- name: Ensure Netdata Github Repo Is up to Date
-  become: true
-  git:
-    repo: "{{ netdata_repo }}"
-    dest: "{{ netdata_source_dir }}"
-    version: "{{ netdata_repo_version }}"
-    depth: 100
-
 - name: Set Netdata Service File Variables (Systemd)
   set_fact:
     netdata_service_permission: 0664
@@ -50,12 +13,82 @@
     netdata_service_installation: /etc/rc.d/init.d/netdata
   when: ansible_service_mgr | lower == 'upstart'
 
+- name: Check If Netdata Is Installed
+  stat:
+    path: "{{ netdata_service_installation }}"
+  register: netdata_installed
+
+- name: Ensure Pacakge Cache Is up to Date (Apt)
+  become: true
+  apt:
+    update_cache: true
+    cache_valid_time: 360
+  when:
+    - ansible_os_family == 'Debian'
+    - not netdata_installed.stat.exists | bool
+
+- name: Ensure Pacakge Cache Is up to Date (Yum)
+  become: true
+  command: yum makecache
+  args:
+    warn: false
+  register: yum_cache
+  changed_when: yum_cache.rc == 100
+  failed_when: yum_cache.rc == 1
+  when:
+    - ansible_os_family == 'RedHat'
+    - not netdata_installed.stat.exists | bool
+
+- name: Create Temporary Netdata Dependency Script Directory
+  become: true
+  file:
+    path: /tmp/netdata_sh
+    state: directory
+    force: false
+  register: tempdirectory
+  when: not netdata_installed.stat.exists | bool
+
+- name: Set Netdata Dependency Script Path
+  set_fact:
+    netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
+  when: not netdata_installed.stat.exists | bool
+
+- name: Download Netdata Dependency Script
+  become: true
+  get_url:
+    url: "{{ netdata_dependency.sh }}"
+    dest: "{{ tempdirectory.path }}"
+    mode: 0770
+    force: false
+  register: netdata_download_script
+  when:
+    - not netdata_temp_directory_sh.stat.exists | bool
+    - not netdata_installed.stat.exists | bool
+
+- name: Install Netdata Dependencies
+  become: true
+  command: "bash {{ netdata_dependencies }} netdata --dont-wait --non-interactive"
+  register: netdata_dependencies_script
+  changed_when: "netdata_dependencies_script.stdout | search('All Done!')"
+  failed_when: netdata_dependencies_script.rc == 1
+  when: not netdata_installed.stat.exists | bool
+
+- name: Ensure Netdata Github Repo Is up to Date
+  become: true
+  git:
+    repo: "{{ netdata_repo }}"
+    dest: "{{ netdata_source_dir }}"
+    version: "{{ netdata_repo_version }}"
+    depth: 100
+  when: not netdata_installed.stat.exists | bool
+
 - name: Ensure Netdata Is Installed and up to Date
   become: true
   command: "{{ netdata_install_cmd }}"
   args:
     chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
+  when: not netdata_installed.stat.exists | bool
 
 - name: Configure Netdata Service Files
   become: true
@@ -65,3 +98,4 @@
     dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
+  when: not netdata_installed.stat.exists | bool
