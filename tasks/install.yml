@@ -68,7 +68,7 @@
     force: false
   register: netdata_download_script
   when:
-    - not tempdirectory.stat.exists | bool
+    - tempdirectory.stat.exists | bool
     - not netdata_installed.stat.exists | bool
 
 - name: Install Netdata Dependencies
