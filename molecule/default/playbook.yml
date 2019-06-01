@@ -11,5 +11,5 @@
           - network
           - hardware
   roles:
-    - role: hwwilliams.repo-epel
+    - role: hwwilliams.epel
     - role: hwwilliams.netdata
