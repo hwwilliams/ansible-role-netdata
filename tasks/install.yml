@@ -46,25 +46,24 @@
     path: /tmp/netdata_sh
     state: directory
     force: false
-  register: tempdirectory
   when: not netdata_installed.stat.exists | bool
 
 - name: Check If Netdata Temp Directory Exists
   become: true
   stat:
-    path: "{{ tempdirectory.path }}"
+    path: /tmp/netdata_sh
   register: tempdirectory
 
 - name: Set Netdata Dependency Script Path
   set_fact:
-    netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
+    netdata_dependencies: "/tmp/netdata_sh/{{ netdata_dependency.sh | basename }}"
   when: not netdata_installed.stat.exists | bool
 
 - name: Download Netdata Dependency Script
   become: true
   get_url:
     url: "{{ netdata_dependency.sh }}"
-    dest: "{{ tempdirectory.path }}"
+    dest: /tmp/netdata_sh
     mode: 0770
     force: false
   register: netdata_download_script
