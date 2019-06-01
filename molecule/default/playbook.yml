@@ -12,4 +12,7 @@
           - hardware
   roles:
     - role: hwwilliams.epel
+      when:
+        - ansible_os_family == 'RedHat'
+        - not ansible_distribution == 'Fedora'
     - role: hwwilliams.netdata
