@@ -14,6 +14,7 @@
   when: ansible_service_mgr | lower == 'upstart'
 
 - name: Check If Netdata Is Installed
+  become: true
   stat:
     path: "{{ netdata_service_installation }}"
   register: netdata_installed
@@ -48,6 +49,12 @@
   register: tempdirectory
   when: not netdata_installed.stat.exists | bool
 
+- name: Check If Netdata Temp Directory Exists
+  become: true
+  stat:
+    path: "{{ tempdirectory.path }}"
+  register: tempdirectory
+
 - name: Set Netdata Dependency Script Path
   set_fact:
     netdata_dependencies: "{{ tempdirectory.path }}/{{ netdata_dependency.sh | basename }}"
@@ -62,7 +69,7 @@
     force: false
   register: netdata_download_script
   when:
-    - not netdata_temp_directory_sh.stat.exists | bool
+    - not tempdirectory.stat.exists | bool
     - not netdata_installed.stat.exists | bool
 
 - name: Install Netdata Dependencies
