@@ -18,9 +18,9 @@
   include_tasks:
     file: install-cmd.yml
 
-- name: Include Main Netdata Install Task
+- name: Include Netdata Install Task
   include_tasks:
-    file: install.yml
+    file: install-netdata.yml
 
 - name: Include Configuration File
   include_tasks:
