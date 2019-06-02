@@ -73,3 +73,9 @@
     dest: "{{ netdata_service_installation }}"
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
+
+- name: Remove Temporary Netdata Dependency Script Directory
+  become: true
+  file:
+    path: /tmp/netdata_sh
+    state: absent
