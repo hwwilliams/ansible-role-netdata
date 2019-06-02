@@ -13,6 +13,6 @@
   roles:
     - role: hwwilliams.epel
       when:
-        - ansible_os_family == 'RedHat'
-        - not ansible_distribution == 'Fedora'
+        - ansible_os_family | lower == 'redhat'
+        - not ansible_distribution | lower == 'fedora'
     - role: hwwilliams.netdata

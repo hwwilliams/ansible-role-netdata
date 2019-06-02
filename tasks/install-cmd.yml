@@ -45,4 +45,4 @@
 - name: Add Netdata Installation Path Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_installation_path }}"
-  when: not netdata_opt_installation_path == 'default'
+  when: not netdata_opt_installation_path | lower == 'default'

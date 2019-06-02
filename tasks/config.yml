@@ -2,12 +2,12 @@
 - name: Set Netdata Configuration File Path Variable (If Default)
   set_fact:
     netdata_config_path: /etc/netdata
-  when: netdata_opt_installation_path == 'default'
+  when: netdata_opt_installation_path | lower == 'default'
 
 - name: Set Netdata Configuration File Path Variable (If Not Default)
   set_fact:
     netdata_config_path: "{{ netdata_opt_installation_path }}/etc/netdata"
-  when: not netdata_opt_installation_path == 'default'
+  when: not netdata_opt_installation_path | lower == 'default'
 
 - name: Ensure Netdata Configuration File Is Present
   become: true
