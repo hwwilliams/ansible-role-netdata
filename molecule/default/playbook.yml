@@ -17,6 +17,9 @@
         - not ansible_distribution | lower == 'fedora'
     - role: hwwilliams.netdata
   tasks:
+    - name: Flush Handlers
+      meta:
+        free_form: flush_handlers
     - name: Check for Active Connections on Netdata Web UI Port
       wait_for:
         port: 19999
