@@ -13,17 +13,17 @@
     - not netdata_uninstall | bool
     - netdata_monitor_ipmi | bool
 
-- name: Include Build Sequence of Installation Command
-  include_tasks:
-    file: install-cmd.yml
-  when: not netdata_uninstall | bool
-
 - name: Include Kernel Same-Page Merging Task (If Configured)
   include_tasks:
     file: ksm.yml
   when:
     - not netdata_uninstall | bool
     - netdata_opt_enable_ksm | bool
+
+- name: Include Build Sequence of Installation Command
+  include_tasks:
+    file: install-cmd.yml
+  when: not netdata_uninstall | bool
 
 - name: Include Main Netdata Install Task
   include_tasks:
