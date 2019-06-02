@@ -1,12 +1,12 @@
 ---
-- name: Include Monitor Fail2ban Task
+- name: Include Monitor Fail2ban Task (If Configured)
   include_tasks:
     file: monitor-fail2ban.yml
   when:
     - not netdata_uninstall | bool
     - netdata_monitor_fail2ban | bool
 
-- name: Include Monitor IPMI Task
+- name: Include Monitor IPMI Task (If Configured)
   include_tasks:
     file: monitor-ipmi.yml
   when:
