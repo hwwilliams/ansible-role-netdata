@@ -1,0 +1,6 @@
+{% for section in netdata_config %}
+{% if section.options %}
+[{{ section.name }}]
+    {{ section.options | indent(4, false) }}
+{%- endif %}
+{% endfor %}

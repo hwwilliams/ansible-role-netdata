@@ -1,38 +1,25 @@
 ---
-- name: "Include {{ ansible_service_mgr }} Variables"
-  include_vars:
-    file: "{{ ansible_service_mgr }}.yml"
-  when: not netdata_uninstall
-
-- name: Include Netdata Install Options (If Configured)
-  include_vars:
-    file: install-cmd-options.yml
-  when:
-    - netdata_install_options | length > 0
-    - not netdata_uninstall
-
-- name: Include Monitor Fail2ban Task
+- name: Include Dynamic Variables Task
   include_tasks:
-    file: monitor-fail2ban.yml
-  when:
-    - not netdata_uninstall
-    - netdata_monitor_fail2ban
+    file: dynamic-var.yml
 
-- name: Include Monitor IPMI Task
-  include_tasks:
-    file: monitor-ipmi.yml
-  when:
-    - not netdata_uninstall
-    - netdata_monitor_ipmi
+- name: Check If Netdata Is Installed
+  become: true
+  stat:
+    path: "{{ netdata_service_installation }}"
+  register: netdata_installed
 
 - name: Include Main Netdata Install Task
   include_tasks:
     file: install.yml
-  when: not netdata_uninstall
+  when:
+    - not netdata_uninstall | bool
+    - not netdata_installed.stat.exists | bool
 
 - name: Include Netdata Uninstaller (If Configured)
   include_tasks:
     file: uninstall.yml
-  when: netdata_uninstall
-  tags:
-    - netdata_uninstall
+  when:
+    - netdata_uninstall | bool
+    - netdata_installed.stat.exists | bool
+  tags: ["netdata_uninstall"]

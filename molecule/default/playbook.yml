@@ -1,10 +1,18 @@
 ---
 - name: Converge
   hosts: all
+  become: true
   pre_tasks:
-    - name: Update Apt Cache
-      apt: update_cache=yes cache_valid_time=360
-      when: ansible_os_family == 'Debian'
-      changed_when: false
+    - name: Gathering Facts
+      become: false
+      setup:
+        gather_subset:
+          - '!all'
+          - network
+          - hardware
   roles:
+    - role: hwwilliams.epel
+      when:
+        - ansible_os_family | lower == 'redhat'
+        - not ansible_distribution | lower == 'fedora'
     - role: hwwilliams.netdata

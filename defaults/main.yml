@@ -1,42 +1,41 @@
 ---
-# Netdata package dependencies
-# for Debian/Ubuntu and CentOS/Fedora/Redhat
-# systems.
-# 'General' is for packages that have the same
-# package name across distributions
-netdata_packages_apt:
-    - autoconf-archive
-    - autogen
-    - libmnl-dev
-    - pkg-config
-    - uuid-dev
-    - zlib1g-dev
-netdata_packages_dnf:
-    - autoconf-archive
-    - autogen
-    - findutils
-    - libmnl-devel
-    - libuuid-devel
-    - pkgconfig
-    - zlib-devel
-netdata_packages_general:
-    - autoconf
-    - automake
-    - curl
-    - gcc
-    - git
-    - make
-netdata_packages_yum:
-    - libmnl-devel
-    - libuuid-devel
-    - lm_sensors
-    - MySQL-python
-    - nc
-    - pkgconfig
-    - python
-    - python-psycopg2
-    - PyYAML
-    - zlib-devel
+# Netdata Configuration File Settings
+netdata_config:
+    - name: global
+      options: |
+        history = 3600
+    - name: web
+      options: []
+    - name: plugins
+      options: []
+    - name: health
+      options: []
+    - name: registry
+      options: []
+    - name: cloud
+      options: []
+    - name: backend
+      options: []
+    - name: statsd
+      options: []
+
+# Official Netdata system agnostic script that
+# checks for and installs dependencies
+netdata_dependency:
+    sh: "https://raw.githubusercontent.com/netdata/netdata-demo-site/master/install-required-packages.sh"
+
+## Installation options
+# Example for netdata_opt_installation_path
+# netdata_opt_installation_path: '/opt'
+netdata_opt_auto_update: false
+netdata_opt_disable_go: false
+netdata_opt_disable_lto: false
+netdata_opt_disable_plugin_freeipmi: false
+netdata_opt_disable_plugin_nfacct: false
+netdata_opt_disable_telemetry: false
+netdata_opt_disable_x86_sse: false
+netdata_opt_enable_ksm: false
+netdata_opt_installation_path: default
 
 ## Enable Netdata montioring of extra services
 # If fail2ban is installed setting this to
@@ -73,66 +72,14 @@ netdata_source_dir: /usr/local/src/netdata
 # waiting for user interaction on prompts
 # '--dont-start-it' makes the script install netdata
 # and its service but doesn't start it once the script finishes
-netdata_install_cmd: ./netdata-installer.sh --dont-wait --dont-start-it
+netdata_install_script: netdata-installer.sh
 
 # Installation environment saved by Netdata installer
 netdata_env: /etc/netdata/.environment
 
-# Netdata installer script optional switches
-######################
-# Syntax example for this variable:
-# netdata_install_options:
-#     - install /opt
-#     - auto-update
-######################
-#
-# Available switches are listed below:
-#    --install /PATH/TO/INSTALL
-#         If you give: --install /opt
-#         netdata will be installed in /opt/netdata
-#    --dont-start-it
-#         Do not (re)start netdata.
-#         Just install it.
-#    --dont-wait
-#         Do not wait for the user to press ENTER.
-#         Start immediately building it.
-#    --auto-update | -u
-#         Install netdata-updater to cron,
-#         to update netdata automatically once per day
-#         (can only be done for installations from git)
-#    --enable-plugin-freeipmi
-#    --disable-plugin-freeipmi
-#         Enable/disable the FreeIPMI plugin.
-#         Default: enable it when libipmimonitoring is available.
-#    --enable-plugin-nfacct
-#    --disable-plugin-nfacct
-#         Enable/disable the nfacct plugin.
-#         Default: enable it when libmnl and libnetfilter_acct are available.
-#    --enable-lto
-#    --disable-lto
-#         Enable/disable Link-Time-Optimization
-#         Default: enabled
-#    --disable-x86-sse
-#         Disable SSE instructions
-#         Default: enabled
-#    --zlib-is-really-here
-#    --libs-are-really-here
-#         If you get errors about missing zlib,
-#         or libuuid but you know it is available,
-#         you have a broken pkg-config.
-#         Use this option to allow it continue
-#         without checking pkg-config.
-#    --disable-telemetry
-#         Use this flag to opt-out from our anonymous telemetry progam.
-#    --disable-go
-#         Flag to disable installation of go.d.plugin
-netdata_install_options: []
-
 # If set to true Netdata will be uninstalled using
 # the official uninstaller script
 netdata_uninstall: false
-
-# Default variables for uninstaller script
 netdata_uninstaller:
     env: "{{ netdata_env }}"
     path: "{{ netdata_source_dir }}/packaging/installer"

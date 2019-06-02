@@ -1,51 +1,27 @@
 ---
-- name: Ensure Apt Cache Is up to Date (Apt)
-  become: true
-  apt:
-    update_cache: true
-    cache_valid_time: 360
-  when:
-    - ansible_os_family == 'Debian'
+- name: Include Monitor Fail2ban Task (If Configured)
+  include_tasks:
+    file: monitor-fail2ban.yml
+  when: netdata_monitor_fail2ban | bool
 
-- name: Ensure Netdata Dependencies Are Present (General)
-  become: true
-  package:
-    name: "{{ netdata_packages_general }}"
-    state: present
+- name: Include Monitor IPMI Task (If Configured)
+  include_tasks:
+    file: monitor-ipmi.yml
+  when: netdata_monitor_ipmi | bool
 
-- name: Ensure Netdata Dependencies Are Present (Apt)
-  become: true
-  apt:
-    name: "{{ netdata_packages_apt }}"
-    state: present
-    update_cache: true
-    cache_valid_time: 360
-  when:
-    - ansible_os_family == 'Debian'
+- name: Include Kernel Same-Page Merging Task (If Configured)
+  include_tasks:
+    file: ksm.yml
+  when: netdata_opt_enable_ksm | bool
 
-- name: Ensure Netdata Dependencies Are Present (Dnf)
-  become: true
-  dnf:
-    name: "{{ netdata_packages_dnf }}"
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution == 'Fedora'
+- name: Include Build Sequence of Installation Command
+  include_tasks:
+    file: install-cmd.yml
 
-- name: Ensure Netdata Dependencies Are Present (Yum)
-  become: true
-  yum:
-    name: "{{ netdata_packages_yum }}"
-    state: present
-    update_cache: true
-  when:
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution == 'CentOS'
+- name: Include Netdata Install Task
+  include_tasks:
+    file: install-netdata.yml
 
-- name: Ensure Netdata Github Repo Is up to Date
-  become: true
-  git:
-    repo: "{{ netdata_repo }}"
-    dest: "{{ netdata_source_dir }}"
-    version: "{{ netdata_repo_version }}"
-    depth: 100
-  notify: Install Netdata
+- name: Include Configuration File
+  include_tasks:
+    file: config.yml
