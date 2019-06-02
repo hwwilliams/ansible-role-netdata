@@ -12,7 +12,9 @@
 - name: Include Main Netdata Install Task
   include_tasks:
     file: install.yml
-  when: not netdata_uninstall | bool
+  when:
+    - not netdata_uninstall | bool
+    - not netdata_installed.stat.exists | bool
 
 - name: Include Netdata Uninstaller (If Configured)
   include_tasks:
