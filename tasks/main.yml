@@ -1,23 +1,26 @@
 ---
 - name: Include Dynamic Variables Task
-  include_tasks:
+  import_tasks:
     file: dynamic-var.yml
+  tags: ["netdata_install", "netdata_uninstall"]
 
 - name: Check If Netdata Is Installed
   become: true
   stat:
     path: "{{ netdata_service_installation }}"
   register: netdata_installed
+  tags: ["netdata_install", "netdata_uninstall"]
 
 - name: Include Main Netdata Install Task
-  include_tasks:
+  import_tasks:
     file: install.yml
   when:
     - not netdata_uninstall | bool
     - not netdata_installed.stat.exists | bool
+  tags: ["netdata_install"]
 
 - name: Include Netdata Uninstaller (If Configured)
-  include_tasks:
+  import_tasks:
     file: uninstall.yml
   when:
     - netdata_uninstall | bool
