@@ -1,0 +1,14 @@
+---
+- name: Set Netdata Service File Variables (Systemd)
+  set_fact:
+    netdata_service_permission: 0664
+    netdata_service_source: "{{ netdata_source_dir }}/system/netdata.service"
+    netdata_service_installation: /etc/systemd/system/netdata.service
+  when: ansible_service_mgr | lower == 'systemd'
+
+- name: Set Netdata Service File Variables (Upstart)
+  set_fact:
+    netdata_service_permission: 0755
+    netdata_service_source: "{{ netdata_source_dir }}/system/netdata-init-d"
+    netdata_service_installation: /etc/init.d/netdata
+  when: ansible_service_mgr | lower == 'upstart'
