@@ -26,8 +26,3 @@
   import_tasks:
     file: install-netdata.yml
   tags: ["netdata_install"]
-
-- name: Include Configuration File
-  import_tasks:
-    file: config.yml
-  tags: ["netdata_install", "netdata_config"]
