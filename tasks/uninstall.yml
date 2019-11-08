@@ -1,18 +1,18 @@
 ---
-- name: Check for Existing Netdata GitHub Repo Directory
+- name: Netdata Uninstall | Check for Existing Netdata GitHub Repo Directory
   become: true
   stat:
     path: "{{ netdata_source_dir }}"
   register: netdata_source_path
 
-- name: Run Netdata Uninstaller Script
+- name: Netdata Uninstall | Run Netdata Uninstaller Script
   become: true
   command: "./{{ netdata_uninstaller.sh }} -y -f -e {{ netdata_uninstaller.env }}"
   args:
     chdir: "{{ netdata_uninstaller.path }}"
   when: netdata_source_path.stat.exists | bool
 
-- name: Remove Netdata GitHub Repo Directory
+- name: Netdata Uninstall | Remove Netdata GitHub Repo Directory
   become: true
   file:
     path: "{{ netdata_source_dir }}"

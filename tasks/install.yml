@@ -1,28 +1,28 @@
 ---
-- name: Include Monitor Fail2ban Task (If Configured)
+- name: Netdata Install | Include Monitor Fail2ban Task (If Configured)
   import_tasks:
     file: monitor-fail2ban.yml
   when: netdata_monitor_fail2ban | bool
   tags: ["netdata_install", "netdata_fail2ban"]
 
-- name: Include Monitor IPMI Task (If Configured)
+- name: Netdata Install | Include Monitor IPMI Task (If Configured)
   import_tasks:
     file: monitor-ipmi.yml
   when: netdata_monitor_ipmi | bool
   tags: ["netdata_install", "netdata_ipmi"]
 
-- name: Include Kernel Same-Page Merging Task (If Configured)
+- name: Netdata Install | Include Kernel Same-Page Merging Task (If Configured)
   import_tasks:
     file: ksm.yml
   when: netdata_opt_enable_ksm | bool
   tags: ["netdata_install", "netdata_ksm"]
 
-- name: Include Build Sequence of Installation Command
+- name: Netdata Install | Include Build Sequence of Installation Command
   import_tasks:
     file: install-cmd.yml
   tags: ["netdata_install"]
 
-- name: Include Netdata Install Task
+- name: Netdata Install | Include Netdata Install Task
   import_tasks:
     file: install-netdata.yml
   tags: ["netdata_install"]

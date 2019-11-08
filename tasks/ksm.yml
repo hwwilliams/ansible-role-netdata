@@ -1,5 +1,5 @@
 ---
-- name: Enable Kernel Same-Page Merging
+- name: Netdata KSM | Enable Kernel Same-Page Merging
   become: true
   lineinfile:
     line: "{{ item }}"

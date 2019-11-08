@@ -1,48 +1,48 @@
 ---
-- name: Include Netdata Install Option Definitions
+- name: Netdata Install Cmd | Include Netdata Install Option Definitions
   include_vars:
     file: install-option-definitions.yml
 
-- name: Set Base Netdata Installation Variable
+- name: Netdata Install Cmd | Set Base Netdata Installation Variable
   set_fact:
     netdata_install_cmd: "./{{ netdata_install_script }} --dont-wait --dont-start-it"
 
-- name: Add Netdata Auto Update Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Auto Update Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_auto_update }}"
   when: netdata_opt_auto_update | bool
 
-- name: Add Netdata Disable Go Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable Go Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_go }}"
   when: netdata_opt_disable_go | bool
 
-- name: Add Netdata Disable LTO Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable LTO Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_lto }}"
   when: netdata_opt_disable_lto | bool
 
-- name: Add Netdata Disable FreeIPMI Plugin Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable FreeIPMI Plugin Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_plugin_freeipmi }}"
   when: netdata_opt_disable_plugin_freeipmi | bool
 
-- name: Add Netdata Disable NFACCT Plugin Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable NFACCT Plugin Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_plugin_nfacct }}"
   when: netdata_opt_disable_plugin_nfacct | bool
 
-- name: Add Netdata Disable Telemetry Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable Telemetry Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_telemetry }}"
   when: netdata_opt_disable_telemetry | bool
 
-- name: Add Netdata Disable x86 SSE Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Disable x86 SSE Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_disable_x86_sse }}"
   when: netdata_opt_disable_x86_sse | bool
 
-- name: Add Netdata Installation Path Switch to Installation Variable (If Configured)
+- name: Netdata Install Cmd | Add Netdata Installation Path Switch to Installation Variable (If Configured)
   set_fact:
     netdata_install_cmd: "{{ netdata_install_cmd + ' ' + netdata_installation_path }}"
   when: not netdata_opt_installation_path | lower == 'default'

@@ -1,5 +1,5 @@
 ---
-- name: Ensure Netdata IPMI Monitoring Dependencies (Apt)
+- name: Netdata Monitor IPMI | Ensure Netdata IPMI Monitoring Dependencies (Apt)
   become: true
   package:
     name: libipmimonitoring-dev
@@ -8,7 +8,7 @@
     - ansible_os_family | lower == 'debian'
     - ansible_distribution | lower == 'ubuntu'
 
-- name: Ensure Netdata IPMI Monitoring Dependencies (Yum)
+- name: Netdata Monitor IPMI | Ensure Netdata IPMI Monitoring Dependencies (Yum)
   become: true
   package:
     name: freeipmi-devel

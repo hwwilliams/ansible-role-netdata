@@ -1,18 +1,18 @@
 ---
-- name: Check If Fail2ban Directory Exists
+- name: Netdata Monitor Fail2ban | Check If Fail2ban Directory Exists
   stat:
     path: /etc/fail2ban
   register: fail2ban_dir
   failed_when: not fail2ban_dir.stat.exists | bool
   ignore_errors: true
 
-- name: Check If Fail2ban Logrotate.d Config File Exists
+- name: Netdata Monitor Fail2ban | Check If Fail2ban Logrotate.d Config File Exists
   stat:
     path: /etc/logrotate.d/fail2ban
   register: fail2ban_logrotate
   when: fail2ban_dir.stat.exists | bool
 
-- name: Ensure Netdata Can Read Fail2ban Log File
+- name: Netdata Monitor Fail2ban | Ensure Netdata Can Read Fail2ban Log File
   become: true
   lineinfile:
     path: /etc/logrotate.d/fail2ban

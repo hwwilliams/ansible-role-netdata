@@ -1,4 +1,5 @@
 ---
-- name: Restart and Enable Netdata
+- name: Netdata Handlers | Restart and Enable Netdata
   become: true
+  listen: Restart and Enable Netdata
   service: name=netdata state=restarted enabled=true

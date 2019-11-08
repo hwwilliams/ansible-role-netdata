@@ -1,12 +1,12 @@
 ---
-- name: Ensure Pacakge Cache Is up to Date (Apt)
+- name: Netdata Install | Ensure Pacakge Cache Is up to Date (Apt)
   become: true
   apt:
     update_cache: true
     cache_valid_time: 360
   when: ansible_os_family == 'Debian'
 
-- name: Ensure Pacakge Cache Is up to Date (Yum)
+- name: Netdata Install | Ensure Pacakge Cache Is up to Date (Yum)
   become: true
   command: yum makecache
   args:
@@ -16,24 +16,24 @@
   failed_when: yum_cache.rc == 1
   when: ansible_os_family == 'RedHat'
 
-- name: Create Temporary Netdata Dependency Script Directory
+- name: Netdata Install | Create Temporary Netdata Dependency Script Directory
   become: true
   file:
     path: /tmp/netdata_sh
     state: directory
     force: false
 
-- name: Check If Netdata Temp Directory Exists
+- name: Netdata Install | Check If Netdata Temp Directory Exists
   become: true
   stat:
     path: /tmp/netdata_sh
   register: tempdirectory
 
-- name: Set Netdata Dependency Script Path
+- name: Netdata Install | Set Netdata Dependency Script Path
   set_fact:
     netdata_dependencies: "/tmp/netdata_sh/{{ netdata_dependency.sh | basename }}"
 
-- name: Download Netdata Dependency Script
+- name: Netdata Install | Download Netdata Dependency Script
   become: true
   get_url:
     url: "{{ netdata_dependency.sh }}"
@@ -43,14 +43,14 @@
   register: netdata_download_script
   when: tempdirectory.stat.exists | bool
 
-- name: Install Netdata Dependencies
+- name: Netdata Install | Install Netdata Dependencies
   become: true
   command: "bash {{ netdata_dependencies }} netdata --dont-wait --non-interactive"
   register: netdata_dependencies_script
   changed_when: "netdata_dependencies_script.stdout is search('All Done!')"
   failed_when: netdata_dependencies_script.rc == 1
 
-- name: Ensure Netdata Github Repo Is up to Date
+- name: Netdata Install | Ensure Netdata Github Repo Is up to Date
   become: true
   git:
     repo: "{{ netdata_repo }}"
@@ -58,14 +58,14 @@
     version: "{{ netdata_repo_version }}"
     depth: 100
 
-- name: Ensure Netdata Is Installed and up to Date
+- name: Netdata Install | Ensure Netdata Is Installed and up to Date
   become: true
   command: "{{ netdata_install_cmd }}"
   args:
     chdir: "{{ netdata_source_dir }}"
     creates: /usr/sbin/netdata
 
-- name: Configure Netdata Service Files
+- name: Netdata Install | Configure Netdata Service Files
   become: true
   copy:
     src: "{{ netdata_service_source }}"
@@ -74,7 +74,7 @@
     mode: "{{ netdata_service_permission }}"
   notify: Restart and Enable Netdata
 
-- name: Remove Temporary Netdata Dependency Script Directory
+- name: Netdata Install | Remove Temporary Netdata Dependency Script Directory
   become: true
   file:
     path: /tmp/netdata_sh
